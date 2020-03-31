@@ -6,7 +6,7 @@
     <meta charset="utf-8">
 
     <title>Corinth</title>
-    
+
     <meta name="author" content="trebz">
     <link rel="stylesheet" href="css/styles.css">
     <script src="/socket.io/socket.io.js"></script>
@@ -15,46 +15,62 @@
 
 <script type="text/javascript">
     $(function () {
-        $("#roll_me").click(roll);
+        var rolls = [];
 
-        var socket = io();
-    });
+        var roll = function () {
 
-    var roll = function () {
-        $(".die_container").empty(".die");
+            rolls = [];
 
-        for (var i = 0; i < 9; i++) {
-            var roll = rollDie();
-            add(roll, 0);
-        }
-
-        var yd = $("#yellow_dice").val();
-        if (yd) {
-            for (var i = 0; i < yd; i++) {
-                var roll = rollDie();
-                add(roll, 1);
+            for (var i = 0; i < 9; i++) {
+                add(rollDie(), 0);
             }
-        }
-    };
 
-    var add = function (value, yellow) {
-        var die = getDie(value, yellow);
-        $("#panel_" + value + "").append(die);
-    };
+            var yd = $("#yellow_dice").val();
+            if (yd) {
+                for (var i = 0; i < yd; i++) {
+                    add(rollDie(), 1);
+                }
+            }
 
-    var getDie = function (value,yellow) {
-        var die = document.createElement("div");
-        die.className = "die";
-        if (yellow) {
-            die.className += " yellow";
-        }
-        return die;
-    };
+            showRolls();
 
-    var rollDie = function () {
-        return Math.floor((Math.random() * 6) + 1);
-    }
+            socket.emit("rolled", rolls);
+        };
 
+        var add = function (value, yellow) {
+            rolls.push({ v: value, y: yellow });
+        };
+
+        var showRolls = function () {
+            $(".die_container").empty(".die");
+
+            for (var i = 0; i < rolls.length; i++) {
+                var die = getDie(rolls[i].v, rolls[i].y);
+                $("#panel_" + rolls[i].v + "").append(die);
+            }
+        };
+
+        var getDie = function (value, yellow) {
+            var die = document.createElement("div");
+            die.className = "die";
+            if (yellow) {
+                die.className += " yellow";
+            }
+            return die;
+        };
+
+        var rollDie = function () {
+            return Math.floor((Math.random() * 6) + 1);
+        };
+
+        $("#roll_me").click(roll);
+        var socket = io();
+
+        socket.on("rolled", function (r) {
+            rolls = r;
+            showRolls();
+        });
+    });
 </script>
 
 <body>
@@ -66,27 +82,27 @@
     <div id="harbor">
 
         <div id="panel_1" class="die_container" data-value="1">
-            <div class="value" ></div>
+            <div class="value"></div>
         </div>
 
         <div id="panel_2" class="die_container" data-value="2">
-            <div class="value" ></div>
+            <div class="value"></div>
         </div>
 
         <div id="panel_3" class="die_container" data-value="3">
-            <div class="value" ></div>
+            <div class="value"></div>
         </div>
 
         <div id="panel_4" class="die_container" data-value="4">
-            <div class="value" ></div>
+            <div class="value"></div>
         </div>
 
         <div id="panel_5" class="die_container" data-value="5">
-            <div class="value" ></div>
+            <div class="value"></div>
         </div>
 
         <div id="panel_6" class="die_container" data-value="6">
-            <div class="value" ></div>
+            <div class="value"></div>
         </div>
 
     </div>

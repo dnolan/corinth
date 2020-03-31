@@ -11,7 +11,10 @@ app.get("/", (req, res) => res.sendFile("index.html", {
 }));
 
 io.on('connection', function (socket) {
-  console.log('a user connected');
+  socket.on("rolled", function (rolls) {
+    console.log(rolls);
+    io.emit("rolled", rolls);      
+  });
 });
 
 app.use(express.static('public'));
