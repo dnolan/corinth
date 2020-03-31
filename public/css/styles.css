@@ -1,0 +1,79 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+#harbor {
+    width: 800px;
+    height: 1100px;
+    background-image: url("../res/img/harbor.png");
+    background-position: center;
+    background-color: #EEE;
+    background-repeat: no-repeat;
+    margin: 0;
+    overflow: auto;    
+}
+
+.die {
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+    background-size: contain;
+    background-color: #FFF;
+}
+
+#panel_1 .die {    
+    background-image: url("../res/img/dice1.png");
+}
+
+#panel_2 .die {    
+    background-image: url("../res/img/dice2.png");
+}
+
+#panel_3 .die {    
+    background-image: url("../res/img/dice3.png");
+}
+
+#panel_4 .die {    
+    background-image: url("../res/img/dice4.png");
+}
+
+#panel_5 .die {    
+    background-image: url("../res/img/dice5.png");
+}
+
+#panel_6 .die {    
+    background-image: url("../res/img/dice6.png");
+}
+
+.yellow {    
+    background-color: #FFD700;
+}
+
+.die_container {
+    margin-left: 200px;
+    margin-top: 15px;    
+    margin-bottom: 40px;
+    width : 550px;
+    height: 145px;
+    background-color:   rgba(200,200,200,0.5);
+    
+}
+
+.die_container:last-child   {
+    margin-bottom: 0;
+}
+
+.die_container .die {
+    float: left;
+}
+
+.die_container .value {
+    position: relative;    
+    left: 450px;
+    top: 20px;
+    background-color: rgba(255,255,255,0.3);
+    width:100px;
+    height: 100px;
+    font-size: 50px;
+    text-align: center;
+    line-height: 100px;
+}

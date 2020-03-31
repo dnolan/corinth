@@ -1,0 +1,96 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Corinth</title>
+    
+    <meta name="author" content="trebz">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
+</head>
+
+<script type="text/javascript">
+    $(function () {
+        $("#roll_me").click(roll);
+
+        var socket = io();
+    });
+
+    var roll = function () {
+        $(".die_container").empty(".die");
+
+        for (var i = 0; i < 9; i++) {
+            var roll = rollDie();
+            add(roll, 0);
+        }
+
+        var yd = $("#yellow_dice").val();
+        if (yd) {
+            for (var i = 0; i < yd; i++) {
+                var roll = rollDie();
+                add(roll, 1);
+            }
+        }
+    };
+
+    var add = function (value, yellow) {
+        var die = getDie(value, yellow);
+        $("#panel_" + value + "").append(die);
+    };
+
+    var getDie = function (value,yellow) {
+        var die = document.createElement("div");
+        die.className = "die";
+        if (yellow) {
+            die.className += " yellow";
+        }
+        return die;
+    };
+
+    var rollDie = function () {
+        return Math.floor((Math.random() * 6) + 1);
+    }
+
+</script>
+
+<body>
+
+    <button id="roll_me">Roll!</button>
+
+    <input type="text" id="yellow_dice" />
+
+    <div id="harbor">
+
+        <div id="panel_1" class="die_container" data-value="1">
+            <div class="value" ></div>
+        </div>
+
+        <div id="panel_2" class="die_container" data-value="2">
+            <div class="value" ></div>
+        </div>
+
+        <div id="panel_3" class="die_container" data-value="3">
+            <div class="value" ></div>
+        </div>
+
+        <div id="panel_4" class="die_container" data-value="4">
+            <div class="value" ></div>
+        </div>
+
+        <div id="panel_5" class="die_container" data-value="5">
+            <div class="value" ></div>
+        </div>
+
+        <div id="panel_6" class="die_container" data-value="6">
+            <div class="value" ></div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
