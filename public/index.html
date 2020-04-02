@@ -9,70 +9,11 @@
 
     <meta name="author" content="trebz">
     <link rel="stylesheet" href="css/styles.css">
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js" type="text/javascript"></script>
+    <script src="/socket.io/socket.io.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="scripts/main.js"></script>
 </head>
-
-<script type="text/javascript">
-    $(function () {
-        var rolls = [];
-
-        var roll = function () {
-
-            rolls = [];
-
-            for (var i = 0; i < 9; i++) {
-                add(rollDie(), 0);
-            }
-
-            var yd = $("#yellow_dice").val();
-            if (yd) {
-                for (var i = 0; i < yd; i++) {
-                    add(rollDie(), 1);
-                }
-            }
-
-            showRolls();
-
-            socket.emit("rolled", rolls);
-        };
-
-        var add = function (value, yellow) {
-            rolls.push({ v: value, y: yellow });
-        };
-
-        var showRolls = function () {
-            $(".die_container").empty(".die");
-
-            for (var i = 0; i < rolls.length; i++) {
-                var die = getDie(rolls[i].v, rolls[i].y);
-                $("#panel_" + rolls[i].v + "").append(die);
-            }
-        };
-
-        var getDie = function (value, yellow) {
-            var die = document.createElement("div");
-            die.className = "die";
-            if (yellow) {
-                die.className += " yellow";
-            }
-            return die;
-        };
-
-        var rollDie = function () {
-            return Math.floor((Math.random() * 6) + 1);
-        };
-
-        $("#roll_me").click(roll);
-        var socket = io();
-
-        socket.on("rolled", function (r) {
-            rolls = r;
-            showRolls();
-        });
-    });
-</script>
-
 <body>
 
     <button id="roll_me">Roll!</button>
@@ -81,30 +22,37 @@
 
     <div id="harbor">
 
-        <div id="panel_1" class="die_container" data-value="1">
+        <div id="panel_6" class="die_container" data-value="1">
             <div class="value"></div>
         </div>
 
-        <div id="panel_2" class="die_container" data-value="2">
+        <div id="panel_5" class="die_container" data-value="2">
             <div class="value"></div>
         </div>
 
-        <div id="panel_3" class="die_container" data-value="3">
+        <div id="panel_4" class="die_container" data-value="3">
             <div class="value"></div>
         </div>
 
-        <div id="panel_4" class="die_container" data-value="4">
+        <div id="panel_3" class="die_container" data-value="4">
             <div class="value"></div>
         </div>
 
-        <div id="panel_5" class="die_container" data-value="5">
+        <div id="panel_2" class="die_container" data-value="5">
             <div class="value"></div>
         </div>
 
-        <div id="panel_6" class="die_container" data-value="6">
+        <div id="panel_1" class="die_container" data-value="6">
             <div class="value"></div>
         </div>
 
+    </div>
+
+    <div id="console">
+        <label>Name:</label>
+        <input type="text" id="name" />
+        <button id="set_name">Set Name</button>
+        <ul id="chat"></ul>
     </div>
 
 </body>
